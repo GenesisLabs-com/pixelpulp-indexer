@@ -5,7 +5,7 @@ ARG PORT
 
 EXPOSE ${PORT}
 
-WORKDIR /pixelpulp-indexer
+WORKDIR /app
 ADD . /pixelpulp-indexer
 RUN yarn install
 RUN yarn build
