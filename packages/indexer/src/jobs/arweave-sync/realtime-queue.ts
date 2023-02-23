@@ -1,11 +1,12 @@
 import { Queue, QueueScheduler, Worker } from "bullmq";
 import { randomUUID } from "crypto";
-
+import axios from "axios";
 import { syncArweave } from "@/arweave-sync/index";
 import { logger } from "@/common/logger";
 import { arweaveGateway } from "@/common/provider";
 import { redis } from "@/common/redis";
 import { config } from "@/config/index";
+import { number } from "joi";
 
 const QUEUE_NAME = "arweave-sync-realtime";
 
@@ -29,7 +30,9 @@ if (config.doBackgroundWork) {
       try {
         let localBlock = Number(await redis.get(`${QUEUE_NAME}-last-block`));
         if (localBlock === 0) {
-          localBlock = (await arweaveGateway.blocks.getCurrent()).height;
+          const resp = await axios.get("https://arweave.net/info");
+          localBlock = Number(resp.data.height)
+          // localBlock = (await arweaveGateway.blocks.getCurrent()).height;
           await redis.set(`${QUEUE_NAME}-last-block`, localBlock);
         } else {
           localBlock++;

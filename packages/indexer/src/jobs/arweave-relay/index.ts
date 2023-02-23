@@ -254,29 +254,29 @@ if (config.doBackgroundWork && config.arweaveRelayerKey) {
             }
 
             if (batch.length) {
-              const wallet = JSON.parse(config.arweaveRelayerKey!);
-              const transaction = await arweaveGateway.createTransaction(
-                {
-                  data: JSON.stringify(batch.map((b) => JSON.parse(b))),
-                },
-                wallet
-              );
-              transaction.addTag("Content-Type", "application/json");
-              transaction.addTag("App-Name", `Reservoir Protocol`);
-              transaction.addTag("App-Version", "0.0.1");
-              transaction.addTag("Network", getNetworkName());
+              // const wallet = JSON.parse(config.arweaveRelayerKey!);
+              // const transaction = await arweaveGateway.createTransaction(
+              //   {
+              //     data: JSON.stringify(batch.map((b) => JSON.parse(b))),
+              //   },
+              //   wallet
+              // );
+              // transaction.addTag("Content-Type", "application/json");
+              // transaction.addTag("App-Name", `Reservoir Protocol`);
+              // transaction.addTag("App-Version", "0.0.1");
+              // transaction.addTag("Network", getNetworkName());
 
-              await arweaveGateway.transactions.sign(transaction, wallet).then(async () => {
-                const uploader = await arweaveGateway.transactions.getUploader(transaction);
-                while (!uploader.isComplete) {
-                  await uploader.uploadChunk();
-                }
-              });
+              // await arweaveGateway.transactions.sign(transaction, wallet).then(async () => {
+              //   const uploader = await arweaveGateway.transactions.getUploader(transaction);
+              //   while (!uploader.isComplete) {
+              //     await uploader.uploadChunk();
+              //   }
+              // });
 
-              logger.info(
-                "arweave-relay",
-                `${batch.length} pending data entries relayed via transaction ${transaction.id}`
-              );
+              // logger.info(
+              //   "arweave-relay",
+              //   `${batch.length} pending data entries relayed via transaction ${transaction.id}`
+              // );
 
               await redis.ltrim(PENDING_DATA_KEY, batchSize * iterations, -1);
             } else {
