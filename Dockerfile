@@ -1,8 +1,6 @@
 FROM node:16.15
 
-ARG PORT
-
-EXPOSE ${PORT}
+EXPOSE 3001
 
 WORKDIR /app
 COPY package*.json ./
