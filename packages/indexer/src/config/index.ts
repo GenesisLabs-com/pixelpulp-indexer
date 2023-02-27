@@ -34,7 +34,7 @@ export const config = {
 
   disableRealtimeMetadataRefresh: Boolean(Number(process.env.DISABLE_REALTIME_METADATA_REFRESH)),
 
-  indexer_URL: String(process.env.INDEXER_URL),
+  indexerBaseUrl: String(process.env.INDEXER_BASEURL),
   databaseUrl: String(process.env.DATABASE_URL),
   readReplicaDatabaseUrl: String(process.env.READ_REPLICA_DATABASE_URL || process.env.DATABASE_URL),
   writeReplicaDatabaseUrl: String(

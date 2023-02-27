@@ -8,7 +8,7 @@ export class Assets {
       return undefined;
     }
 
-    const baseUrl = config.indexer_URL+'/assets/v1?';
+    const baseUrl = config.indexerBaseUrl+'/assets/v1?';
     // else{
     //   baseUrl = `https://api${config.chainId == 1 ? "" : "-goerli"}.reservoir.tools/assets/v1?`;
     //   // const baseUrl = `https://api${config.chainId == 5 ? "h" : "-goerli"}.reservoir.tools/assets/v1?`;
