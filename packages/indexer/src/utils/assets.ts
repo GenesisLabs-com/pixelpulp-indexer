@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { chain } from "lodash";
 import { config } from "@/config/index";
 import { encrypt } from "@/common/utils";
 
@@ -8,8 +8,11 @@ export class Assets {
       return undefined;
     }
 
-    const baseUrl = `https://api${config.chainId == 1 ? "" : "-goerli"}.reservoir.tools/assets/v1?`;
-
+    const baseUrl = config.indexerBaseUrl+'/assets/v1?';
+    // else{
+    //   baseUrl = `https://api${config.chainId == 1 ? "" : "-goerli"}.reservoir.tools/assets/v1?`;
+    //   // const baseUrl = `https://api${config.chainId == 5 ? "h" : "-goerli"}.reservoir.tools/assets/v1?`;
+    // }
     if (_.isArray(assets)) {
       const assetsResult = [];
       for (const asset of _.filter(assets, (a) => !_.isNull(a))) {
