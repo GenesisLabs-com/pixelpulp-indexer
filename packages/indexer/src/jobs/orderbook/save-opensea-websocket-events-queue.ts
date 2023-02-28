@@ -68,20 +68,19 @@ if (config.doBackgroundWork) {
         };
 
         logger.info(QUEUE_NAME, `Saving ${params.Records.length} events.`);
+        // const firehouse = new AWS.Firehose({
+        //   accessKeyId: config.awsAccessKeyId,
+        //   secretAccessKey: config.awsSecretAccessKey,
+        //   region: config.openseaWebsocketEventsAwsFirehoseDeliveryStreamRegion,
+        // });
 
-        const firehouse = new AWS.Firehose({
-          accessKeyId: config.awsAccessKeyId,
-          secretAccessKey: config.awsSecretAccessKey,
-          region: config.openseaWebsocketEventsAwsFirehoseDeliveryStreamRegion,
-        });
-
-        try {
-          await firehouse.putRecordBatch(params).promise();
-        } catch (error) {
-          logger.error(QUEUE_NAME, `Failed to save events. error=${error}`);
+        // try {
+        //   await firehouse.putRecordBatch(params).promise();
+        // } catch (error) {
+          logger.error(QUEUE_NAME, `Failed to save events`);
 
           await openseaWebsocketEventsQueue.add(openseaWebsocketEvents);
-        }
+        // }
 
         if (openseaWebsocketEvents.length >= BATCH_LIMIT) {
           await queue.add(randomUUID(), {});

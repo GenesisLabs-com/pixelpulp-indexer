@@ -226,6 +226,7 @@ const getDataSourceImpl = (source: DataSource) => {
 
 const uploadSequenceToS3 = async (key: string, data: string) => {
   const s3UploadAWSCredentials = await getAwsCredentials();
+  if (!s3UploadAWSCredentials) return;
 
   await new AWS.S3(s3UploadAWSCredentials)
     .putObject({
@@ -257,6 +258,8 @@ const uploadSequenceToS3 = async (key: string, data: string) => {
 };
 
 const getAwsCredentials = async () => {
+  if (!config.awsAccessKeyId || !config.awsSecretAccessKey) return null;
+
   let sts = new AWS.STS({
     accessKeyId: config.awsAccessKeyId,
     secretAccessKey: config.awsSecretAccessKey,
